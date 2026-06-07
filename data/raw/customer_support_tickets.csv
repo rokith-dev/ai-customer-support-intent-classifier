@@ -1,0 +1,3 @@
+ticket_id,ticket_text,intent
+1,"I need help resetting my password",password_reset
+2,"My order has not arrived yet",order_status
