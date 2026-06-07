@@ -1,16 +1,36 @@
-from __future__ import annotations
-
+import pickle
 import streamlit as st
 
-st.set_page_config(page_title="Intent Classifier", page_icon="🎫", layout="wide")
+
+with open("models/intent_classifier.pkl", "rb") as file:
+    model = pickle.load(file)
+
+with open("models/tfidf_vectorizer.pkl", "rb") as file:
+    vectorizer = pickle.load(file)
+
 
 st.title("AI Customer Support Intent Classifier")
-st.write("This app will let you classify support tickets by intent once a trained model is available.")
 
-sample_text = st.text_area("Enter a support ticket", placeholder="Type a customer support message here...")
+st.write(
+    "Enter a customer support message and predict its category."
+)
 
-if st.button("Predict intent"):
-    if sample_text.strip():
-        st.info("Model inference can be wired here after training artifacts are available.")
-    else:
-        st.warning("Please enter a ticket first.")
+
+user_input = st.text_area(
+    "Customer Message"
+)
+
+
+if st.button("Predict"):
+
+    text_vector = vectorizer.transform(
+        [user_input.lower()]
+    )
+
+    prediction = model.predict(
+        text_vector
+    )
+
+    st.success(
+        f"Predicted Category: {prediction[0]}"
+    )
