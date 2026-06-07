@@ -1,3 +1,5 @@
+import pickle
+
 import pandas as pd
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -49,6 +51,15 @@ accuracy = accuracy_score(
 )
 
 print("Accuracy:", accuracy)
+
+with open("models/intent_classifier.pkl", "wb") as file:
+    pickle.dump(model, file)
+
+with open("models/tfidf_vectorizer.pkl", "wb") as file:
+    pickle.dump(vectorizer, file)
+
+print("\nModel and Vectorizer saved successfully!")
+
 
 print("\nClassification Report:")
 print(

@@ -1,15 +1,27 @@
-from __future__ import annotations
-
-import joblib
-from pathlib import Path
-from typing import Iterable
+import pickle
 
 
-def load_model(model_path: str | Path):
-    """Load a trained intent classifier pipeline."""
-    return joblib.load(model_path)
+# Load trained model
+with open("models/intent_classifier.pkl", "rb") as file:
+    model = pickle.load(file)
 
 
-def predict_intent(model, tickets: Iterable[str]):
-    """Predict intents for a collection of ticket texts."""
-    return model.predict(list(tickets))
+# Load TF-IDF vectorizer
+with open("models/tfidf_vectorizer.pkl", "rb") as file:
+    vectorizer = pickle.load(file)
+
+
+user_input = input("Enter customer issue: ")
+
+
+clean_text = user_input.lower()
+
+
+text_vector = vectorizer.transform([clean_text])
+
+
+prediction = model.predict(text_vector)
+
+
+print("\nPredicted Category:")
+print(prediction[0])
