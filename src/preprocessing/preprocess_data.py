@@ -9,7 +9,7 @@ df = df[["issue_description", "category"]]
 
 df = df.dropna()
 
-df = df.drop_duplicates()
+#df = df.drop_duplicates()
 
 df["issue_description"] = df["issue_description"].apply(clean_text)
 

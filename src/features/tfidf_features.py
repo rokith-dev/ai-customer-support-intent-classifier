@@ -1,8 +1,14 @@
-from __future__ import annotations
-
+import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+df = pd.read_csv(
+    "data/processed/cleaned_tickets.csv"
+)
 
-def build_vectorizer(max_features: int = 5000) -> TfidfVectorizer:
-    """Create a TF-IDF vectorizer for ticket text."""
-    return TfidfVectorizer(max_features=max_features, ngram_range=(1, 2))
+vectorizer = TfidfVectorizer()
+
+X = vectorizer.fit_transform(
+    df["issue_description"]
+)
+
+print(X.shape)
